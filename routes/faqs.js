@@ -2,6 +2,7 @@ const express = require('express');
 const faqsRouter = express.Router();
 const faqsModel = require('../models/faqs');
 
+
 faqsRouter.post('/question', (req, response) =>{
     const faqs = new faqsModel(req.body);
     faqs.save(function(err,result){

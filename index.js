@@ -4,10 +4,10 @@ const mongoose = require('mongoose')
 const config = require('./db');
 const bodyParser = require('body-parser');
 
-
-const faqsRoute = require('./routes/faqs')
-const insuranceCompaniesRoute = require('./routes/insurance-companies')
-const LibraryRoute = require('./routes/library')
+const faqsRoute = require('./routes/faqs');
+const insuranceCompaniesRoute = require('./routes/insurance-companies');
+const LibraryRoute = require('./routes/library');
+const GlossaryRoute = require('./routes/glossary');
 
 mongoose.promise = global.promise;
 mongoose.connect(config.DB,{useNewUrlParser: true});
@@ -24,6 +24,7 @@ app.use(cors());
 app.use('/faqs', faqsRoute);
 app.use('/companies', insuranceCompaniesRoute);
 app.use('/library', LibraryRoute);
+app.use('/glossary', GlossaryRoute);
 
 // app.get('/list', (req, res, next) =>{
 //     res.json(['Tonny Stark','Steve Rogers','Bruce Banner','Clint Barton','Thor']);

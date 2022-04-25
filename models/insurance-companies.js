@@ -5,14 +5,14 @@ const insuranceCompanies = new Schema({
     photo: {
         type: String
     },
-    name:{
+    name: {
         type: String
     },
-    mobile:{
-        type:String
+    mobile: {
+        type: Number
     },
-    url:{
-        type:String
+    url: {
+        type: String
     }
 
 })

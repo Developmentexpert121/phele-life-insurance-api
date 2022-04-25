@@ -10,6 +10,9 @@ const library = new Schema({
     },
     description:{
         type: String
+    },
+    picture:{
+        type: String
     }
 })
 
