@@ -26,6 +26,8 @@ app.use('/companies', insuranceCompaniesRoute);
 app.use('/library', LibraryRoute);
 app.use('/glossary', GlossaryRoute);
 
+// app.use('/upload', LibraryRoute);
+
 // app.get('/list', (req, res, next) =>{
 //     res.json(['Tonny Stark','Steve Rogers','Bruce Banner','Clint Barton','Thor']);
 // })
