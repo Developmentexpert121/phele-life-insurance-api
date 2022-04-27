@@ -7,6 +7,8 @@ const LibraryModel = require('../models/library')
 const app = express();
 app.use(cors());
 
+const upload = multer({ dest: 'uploads/' })
+
 const storage = multer.diskStorage({
     getDestination: (req, file, cb) => {
         cb(null, 'public')
@@ -15,19 +17,14 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname)
     }
 });
-console.log("storage is", storage, "destination is ", storage.getDestination, "and filename is", storage.getFilename);
-
-// const upload = multer({storage}).single('file');
-const upload = multer({ storage });
-console.log('Multer value is ', upload);
-
+// console.log("storage is", storage);
 
 LibraryRouter.route("/library").post(upload.single('picture'), (req, res) => {
-    console.log('Library Router ', req.body);
+    // console.log('Library Router ', req.body,"and file is ", req.file);
     const slug = req.body.slug;
     const title = req.body.title;
     const description = req.body.description;
-    const picture = req.body.picture;
+    const picture = req.file.filename;
 
     const newLibraryData = {
         slug,
@@ -35,10 +32,10 @@ LibraryRouter.route("/library").post(upload.single('picture'), (req, res) => {
         description,
         picture
     }
-    console.log("New Library Data ", newLibraryData);
+    // console.log("New Library Data ", newLibraryData);
 
     const newLibrary = new LibraryModel(newLibraryData);
-    console.log("Library Data modal ", newLibrary);
+    // console.log("Library Data modal ", newLibrary);
 
     newLibrary.save()
         .then(() => res.json('user added'))
