@@ -17,16 +17,13 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname)
     }
 });
-console.log("company storage is", storage);
 
 insuranceCompaniesRouter.route("/companies-list").post(upload.single('picture'), (req, res) => {
-    console.log('company Router ', req.body, "and request file iss",req.file);
+
     const companyName = req.body.companyName;
     const mobile = req.body.mobile;
     const url = req.body.url;
     const picture = req.file.filename;
-
-    console.log("Name is ",companyName ,"and mobile ",mobile ,"with url",url,"picture name is",picture );
 
     const newCompanyData = {
         companyName,
@@ -34,10 +31,8 @@ insuranceCompaniesRouter.route("/companies-list").post(upload.single('picture'),
         url,
         picture
     }
-    console.log("New Company Data ", newCompanyData);
 
     const newCompany = new insuranceCompaniesModel(newCompanyData);
-    console.log("Company Data modal ", newCompany);
 
     newCompany.save()
         .then(() => res.json('user added'))
@@ -54,5 +49,21 @@ insuranceCompaniesRouter.get('/companies-list', (req, response) =>{
         }
     })
 })
+
+// To Delete from Database
+insuranceCompaniesRouter.route('/deletecompany/:id').get(function (req, res) {
+    insuranceCompaniesModel.findByIdAndRemove({ _id: req.params.id }, function (err) {
+        if (err) res.json(err);
+        else res.json('Deleted Successfully');
+    });
+});
+
+// To Edit Info by id
+insuranceCompaniesRouter.route('/editcompany/:id').get(function (req, res) {
+    let id = req.params.id;
+    insuranceCompaniesModel.findById(id, function (err, info) {
+        res.json(info);
+    });
+});
 
 module.exports = insuranceCompaniesRouter

@@ -74,4 +74,20 @@ LibraryRouter.get('/library', (res, response) => {
     })
 })
 
+// To Delete from Database
+LibraryRouter.route('/deletelibrary/:id').get(function (req, res) {
+    LibraryModel.findByIdAndRemove({ _id: req.params.id }, function (err) {
+        if (err) res.json(err);
+        else res.json('Deleted Successfully');
+    });
+});
+
+// To Edit Info by id
+LibraryRouter.route('/editlibrary/:id').get(function (req, res) {
+    let id = req.params.id;
+    LibraryModel.findById(id, function (err, info) {
+        res.json(info);
+    });
+});
+
 module.exports = LibraryRouter;
