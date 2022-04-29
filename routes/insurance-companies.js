@@ -40,15 +40,40 @@ insuranceCompaniesRouter.route("/companies-list").post(upload.single('picture'),
 
 });
 
-insuranceCompaniesRouter.get('/companies-list', (req, response) =>{
-    insuranceCompaniesModel.find({}, function(error, companies){
-        if(error){
+insuranceCompaniesRouter.get('/companies-list', (req, response) => {
+    insuranceCompaniesModel.find({}, function (error, companies) {
+        if (error) {
             console.warn(error)
-        }else{
+        } else {
             response.json(companies)
         }
     })
 })
+
+
+// To Update The Company Info
+insuranceCompaniesRouter.route('/updateCompany/:id').post(function (req, res) {
+    insuranceCompaniesModel.findById(req.params.id, function (err, info) {
+        console.log(info);
+        if (!info)
+            return next(new Error('Unable To Find With This Id'));
+        else {
+            info.companyName = req.body.companyName;
+            info.mobile = req.body.mobile;
+            info.url = req.body.url;
+            info.picture = req.body.picture;
+
+            const updatedCompany = new insuranceCompaniesModel(info);
+            updatedCompany.save().then(e => {
+                res.status(200).json('Updated Successfully');
+            })
+                .catch(err => {
+                    res.status(400).send("Unable To Update",err);
+                });
+        }
+    });
+});
+
 
 // To Delete from Database
 insuranceCompaniesRouter.route('/deletecompany/:id').get(function (req, res) {

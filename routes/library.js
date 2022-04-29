@@ -17,10 +17,9 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname)
     }
 });
-// console.log("storage is", storage);
 
 LibraryRouter.route("/library").post(upload.single('picture'), (req, res) => {
-    // console.log('Library Router ', req.body,"and file is ", req.file);
+    
     const slug = req.body.slug;
     const title = req.body.title;
     const description = req.body.description;
@@ -32,37 +31,36 @@ LibraryRouter.route("/library").post(upload.single('picture'), (req, res) => {
         description,
         picture
     }
-    // console.log("New Library Data ", newLibraryData);
-
-    const newLibrary = new LibraryModel(newLibraryData);
-    // console.log("Library Data modal ", newLibrary);
-
+    
+    const newLibrary = new LibraryModel(newLibraryData);  
     newLibrary.save()
         .then(() => res.json('user added'))
         .catch(err => res.status(400).json('Error is ', err))
-
-    // upload(req, res, (err) => {
-    //     if (err) {
-    //         return res.status(500).json(err)
-    //     }
-
-    //     return res.status(200).send(req.files)
-    // })
-    // console.log('Uppload..');
 });
 
-// LibraryRouter.post('/library', (req, response) =>{
+// To Update The library Info
+LibraryRouter.route('/updatelibrary/:id').post(function (req, res) {
+    LibraryModel.findById(req.params.id, function (err, info) {
+        console.log(info);
+        if (!info)
+            return next(new Error('Unable To Find With This Id'));
+        else {
+            info.slug = req.body.slug;
+            info.title = req.body.title;
+            info.description= req.body.description;
+            info.picture = req.body.picture;
 
-//     console.log(req.body)
-//     const library = new LibraryModel(req.body);
-//     library.save(function(err, result){
-//         if(err){
-//             response.json("Error While Stroing");
-//         }else{
-//             response.json("Data Stored Successfully");
-//         }
-//     })
-// })
+            const updatedlibrary = new LibraryModel(info);
+            updatedlibrary.save().then(e => {
+                res.status(200).json('Updated Successfully');
+            })
+                .catch(err => {
+                    res.status(400).send("Unable To Update",err);
+                });
+        }
+    });
+});
+
 
 LibraryRouter.get('/library', (res, response) => {
     LibraryModel.find({}, function (err, library) {
