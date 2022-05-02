@@ -8,6 +8,7 @@ const faqsRoute = require('./routes/faqs');
 const insuranceCompaniesRoute = require('./routes/insurance-companies');
 const LibraryRoute = require('./routes/library');
 const GlossaryRoute = require('./routes/glossary');
+const NewsRoute = require('./routes/News');
 
 mongoose.promise = global.promise;
 mongoose.connect(config.DB,{useNewUrlParser: true});
@@ -25,6 +26,7 @@ app.use('/faqs', faqsRoute);
 app.use('/companies', insuranceCompaniesRoute);
 app.use('/library', LibraryRoute);
 app.use('/glossary', GlossaryRoute);
+app.use('/news', NewsRoute);
 
 // app.use('/upload', LibraryRoute);
 

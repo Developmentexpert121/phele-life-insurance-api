@@ -7,19 +7,21 @@ const LibraryModel = require('../models/library')
 const app = express();
 app.use(cors());
 
-const upload = multer({ dest: 'uploads/' })
-
 const storage = multer.diskStorage({
-    getDestination: (req, file, cb) => {
-        cb(null, 'public')
+    destination: function (req, file, cb) {
+        cb(null, '../phele-life-insurance/public')
     },
-    getFilename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname)
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, uniqueSuffix + "_" + file.originalname)
     }
-});
+})
+
+const upload = multer({ storage: storage })
+
 
 LibraryRouter.route("/library").post(upload.single('picture'), (req, res) => {
-    
+
     const slug = req.body.slug;
     const title = req.body.title;
     const description = req.body.description;
@@ -31,8 +33,8 @@ LibraryRouter.route("/library").post(upload.single('picture'), (req, res) => {
         description,
         picture
     }
-    
-    const newLibrary = new LibraryModel(newLibraryData);  
+
+    const newLibrary = new LibraryModel(newLibraryData);
     newLibrary.save()
         .then(() => res.json('user added'))
         .catch(err => res.status(400).json('Error is ', err))
@@ -47,7 +49,7 @@ LibraryRouter.route('/updatelibrary/:id').post(function (req, res) {
         else {
             info.slug = req.body.slug;
             info.title = req.body.title;
-            info.description= req.body.description;
+            info.description = req.body.description;
             info.picture = req.body.picture;
 
             const updatedlibrary = new LibraryModel(info);
@@ -55,7 +57,7 @@ LibraryRouter.route('/updatelibrary/:id').post(function (req, res) {
                 res.status(200).json('Updated Successfully');
             })
                 .catch(err => {
-                    res.status(400).send("Unable To Update",err);
+                    res.status(400).send("Unable To Update", err);
                 });
         }
     });
