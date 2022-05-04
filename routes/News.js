@@ -26,6 +26,7 @@ newsRouter.route('/updatenews/:id').post(function (req, res) {
         else {
             newsinfo.headline = req.body.headline;
             newsinfo.detail = req.body.detail;
+            newsinfo.source = req.body.source;
 
             newsinfo.save().then(e => {
                 res.json('Updated Successfully');

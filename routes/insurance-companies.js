@@ -22,29 +22,32 @@ const upload = multer({ storage: storage })
 // Add
 insuranceCompaniesRouter.route("/companies-list").post(upload.single('picture'), (req, res) => {
 
-    const companyName = req.body.companyName;
-    const mobile = req.body.mobile;
-    const url = req.body.url;
-    const picture = req.file.filename;
-    console.log("picture", picture);
-    console.log("req file", req.file);
-    // console.log("picture", picture);
+    try {
+        const companyName = req.body.companyName;
+        const mobile = req.body.mobile;
+        const url = req.body.url;
+        const picture = req.file.filename;
+        // console.log("picture", picture);
+        // console.log("req file", req.file);
 
-    const newCompanyData = {
-        companyName,
-        mobile,
-        url,
-        picture
+        const newCompanyData = {
+            companyName,
+            mobile,
+            url,
+            picture
+        }
+        // console.log("new company data", newCompanyData);
+
+        const newCompany = new insuranceCompaniesModel(newCompanyData);
+        console.log("new company", newCompany);
+        newCompany.save()
+            .then(() => res.status(200).json('user added'))
+            .catch(err => res.status(400).json('Error is ', err))
+
+    } catch (error) {
+        console.error('Error On Adding', error.message);
+        res.status(500).send("Internal Server Error");
     }
-    console.log("new company data", newCompanyData);
-
-
-    const newCompany = new insuranceCompaniesModel(newCompanyData);
-    console.log("new company", newCompany);
-
-    newCompany.save()
-        .then(() => res.status(200).json('user added'))
-        .catch(err => res.status(400).json('Error is ', err))
 
 });
 
