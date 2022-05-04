@@ -2,10 +2,16 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const insuranceCompanies = new Schema({
-    name : {
+    picture: {
         type: String
     },
-    logo: {
+    companyName: {
+        type: String
+    },
+    mobile: {
+        type: Number
+    },
+    url: {
         type: String
     }
 })
