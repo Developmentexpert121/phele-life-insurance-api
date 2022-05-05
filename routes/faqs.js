@@ -37,7 +37,6 @@ faqsRouter.route('/updatefaqs/:id').post(function (req, res) {
     });
 });
 
-
 faqsRouter.post('/question', (req, response) => {
     const faqs = new faqsModel(req.body);
     faqs.save(function (err, result) {
@@ -59,6 +58,7 @@ faqsRouter.get('/question', (req, response) => {
         }
     })
 })
+
 
 module.exports = faqsRouter;
 
