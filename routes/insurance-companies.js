@@ -23,10 +23,13 @@ const upload = multer({ storage: storage })
 insuranceCompaniesRouter.route("/companies-list").post(upload.single('picture'), (req, res) => {
 
     try {
+
+        // console.log("info ",req.body);
+        // console.log("info for picture ",req.file);
         const companyName = req.body.companyName;
         const mobile = req.body.mobile;
         const url = req.body.url;
-        const picture = req.file.filename;
+        const picture = (req.body.picture==="" ? "No image Found" : req.file.filename);
         // console.log("picture", picture);
         // console.log("req file", req.file);
 

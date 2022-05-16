@@ -25,7 +25,7 @@ LibraryRouter.route("/library").post(upload.single('picture'), (req, res) => {
     const slug = req.body.slug;
     const title = req.body.title;
     const description = req.body.description;
-    const picture = req.file.filename;
+    const picture = (req.body.picture === "" ? "No image Found" : req.file.filename);
 
     const newLibraryData = {
         slug,
@@ -90,4 +90,13 @@ LibraryRouter.route('/editlibrary/:id').get(function (req, res) {
     });
 });
 
+LibraryRouter.route("/elibrary/:id").get(function (req, res) {
+    
+    let myquery = { slug: req.params.id };
+    console.log("Log");
+    LibraryModel.findOne(myquery, function (err, result) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
 module.exports = LibraryRouter;

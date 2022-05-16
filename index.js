@@ -1,14 +1,20 @@
-var express = require('express');
+const newLocal = require('dotenv').config({ path: '../phele-life-insurance-api/process.env' });
+const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose')
 const config = require('./db');
 const bodyParser = require('body-parser');
+
+console.log("Env Process ",process.env.PORT)
+
 
 const faqsRoute = require('./routes/faqs');
 const insuranceCompaniesRoute = require('./routes/insurance-companies');
 const LibraryRoute = require('./routes/library');
 const GlossaryRoute = require('./routes/glossary');
 const NewsRoute = require('./routes/News');
+
+port = process.env.PORT || 4000
 
 mongoose.promise = global.promise;
 mongoose.connect(config.DB,{useNewUrlParser: true});
@@ -34,6 +40,6 @@ app.use('/news', NewsRoute);
 //     res.json(['Tonny Stark','Steve Rogers','Bruce Banner','Clint Barton','Thor']);
 // })
 
-app.listen(4000, ()=>{
+app.listen(port, ()=>{
     console.log("Server Running at Port 4000");
 })
