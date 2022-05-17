@@ -9,7 +9,6 @@ console.log("Env Process ",process.env.PORT)
 
 
 const faqsRoute = require('./routes/faqs');
-const insuranceCompaniesRoute = require('./routes/insurance-companies');
 const LibraryRoute = require('./routes/library');
 const GlossaryRoute = require('./routes/glossary');
 const NewsRoute = require('./routes/News');
@@ -29,7 +28,6 @@ var app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/faqs', faqsRoute);
-app.use('/companies', insuranceCompaniesRoute);
 app.use('/library', LibraryRoute);
 app.use('/glossary', GlossaryRoute);
 app.use('/news', NewsRoute);
