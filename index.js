@@ -5,13 +5,14 @@ const mongoose = require('mongoose')
 const config = require('./db');
 const bodyParser = require('body-parser');
 
-console.log("Env Process ",process.env.PORT)
+// console.log("Env Process ",process.env.PORT)
 
 
 const faqsRoute = require('./routes/faqs');
 const LibraryRoute = require('./routes/library');
 const GlossaryRoute = require('./routes/glossary');
 const NewsRoute = require('./routes/News');
+const insuranceCompaniesRoute = require('./routes/insurance-companies');
 
 port = process.env.PORT || 4000
 
@@ -31,6 +32,7 @@ app.use('/faqs', faqsRoute);
 app.use('/library', LibraryRoute);
 app.use('/glossary', GlossaryRoute);
 app.use('/news', NewsRoute);
+app.use('/companies', insuranceCompaniesRoute);
 
 // app.use('/upload', LibraryRoute);
 
