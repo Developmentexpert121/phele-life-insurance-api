@@ -90,7 +90,7 @@ LibraryRouter.route('/editlibrary/:id').get(function (req, res) {
     });
 });
 
-LibraryRouter.route("/elibrary/:id").get(function (req, res) {
+LibraryRouter.route("/insurance-library/:id").get(function (req, res) {
     
     let myquery = { slug: req.params.id };
     console.log("Log");
