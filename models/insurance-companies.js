@@ -9,7 +9,7 @@ const insuranceCompanies = new Schema({
         type: String
     },
     mobile: {
-        type: Number
+        type: String
     },
     url: {
         type: String
